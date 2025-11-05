@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>RevLine</title>
+  <link rel="stylesheet" href="project.css">
+</head>
+
+<body>
+  <header>
+    <img src="images/RevlineLogo.png" alt="RevLine Logo">
+    <h1>Every Car Has a Story</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="stories.html">Stories</a>
+      <a href="community.html">Community</a>
+      <a href="support.html">Support/About</a>
+    </nav>
+  </header>
+
+  <h1>Add Your Story Below!</h1><br>
+
+  <form id="carForm">
+    <label for="ownerName">Your Name:</label>
+    <input type="text" id="ownerName" placeholder="Enter your name" required><br>
+
+    <label for="carMake">Car Make:</label>
+    <input type="text" id="carMake" placeholder="ex., Nissan, BMW, Ford" required><br>
+
+    <label for="carModel">Car Model:</label>
+    <input type="text" id="carModel" placeholder="ex., Q50, M3, Mustang" required><br>
+
+    <label for="story">Your Car Story:</label>
+    <textarea id="story" placeholder="Tell us a little about your car..." rows="3" required></textarea><br>
+
+    <label for="carImage">Upload a Picture of Your Car:</label>
+    <input type="file" id="carImage" accept="image/*" required><br>
+
+    <button type="submit">Add My Car</button>
+  </form>
+
+  <table id="storyTable">
+    <thead>
+      <tr>
+        <th>Owner</th>
+        <th>Car</th>
+        <th>Story</th>
+        <th>Photo</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <script>
+    const form = document.getElementById('carForm');
+    const tableBody = document.querySelector('#storyTable tbody');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const ownerName = document.getElementById('ownerName').value.trim();
+      const carMake = document.getElementById('carMake').value.trim();
+      const carModel = document.getElementById('carModel').value.trim();
+      const story = document.getElementById('story').value.trim();
+      const photoInput = document.getElementById('carImage');
+      const file = photoInput.files[0];
+
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const newRow = document.createElement('tr');
+
+        newRow.innerHTML = `
+          <td>${ownerName}</td>
+          <td>${carMake} ${carModel}</td>
+          <td>${story}</td>
+          <td><img src="${event.target.result}" alt="${carMake} ${carModel}" width="120"></td>
+        `;
+
+        tableBody.appendChild(newRow);
+        form.reset();
+      };
+
+      reader.readAsDataURL(file);
+    });
+  </script>
+
+</body>
+</html>
