@@ -53,39 +53,93 @@
   </table>
 
   <script>
-    const form = document.getElementById('carForm');
-    const tableBody = document.querySelector('#storyTable tbody');
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("carForm");
+      const tableBody = document.querySelector("#storyTable tbody");
+      const fileInput = document.getElementById("carImage");
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-      const ownerName = document.getElementById('ownerName').value.trim();
-      const carMake = document.getElementById('carMake').value.trim();
-      const carModel = document.getElementById('carModel').value.trim();
-      const story = document.getElementById('story').value.trim();
-      const photoInput = document.getElementById('carImage');
-      const file = photoInput.files[0];
+        // Collect form data
+        const ownerName = document.getElementById("ownerName").value.trim();
+        const carMake = document.getElementById("carMake").value.trim();
+        const carModel = document.getElementById("carModel").value.trim();
+        const story = document.getElementById("story").value.trim();
+        const file = fileInput.files[0];
 
-      if (!file) return;
+        // Basic validation
+        if (!ownerName || !carMake || !carModel || !story) {
+          alert("Please fill out all fields before submitting.");
+          return;
+        }
 
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const newRow = document.createElement('tr');
+        // Optional: handle missing image gracefully
+        if (!file) {
+          const newRow = document.createElement("tr");
+          newRow.innerHTML = `
+            <td>${ownerName}</td>
+            <td>${carMake} ${carModel}</td>
+            <td>${story}</td>
+            <td><em>No image uploaded</em></td>
+          `;
+          tableBody.appendChild(newRow);
+          form.reset();
+          showSuccessMessage();
+          return;
+        }
 
-        newRow.innerHTML = `
-          <td>${ownerName}</td>
-          <td>${carMake} ${carModel}</td>
-          <td>${story}</td>
-          <td><img src="${event.target.result}" alt="${carMake} ${carModel}" width="120"></td>
-        `;
+        // Validate file type and size
+        if (!file.type.startsWith("image/")) {
+          alert("Please upload a valid image file (JPG, PNG, etc.)");
+          return;
+        }
+        if (file.size > 3 * 1024 * 1024) {
+          alert("Image is too large (max 3MB). Please choose a smaller file.");
+          return;
+        }
 
-        tableBody.appendChild(newRow);
-        form.reset();
-      };
+        // Read image and add to table
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const newRow = document.createElement("tr");
+          newRow.classList.add("fade-in");
 
-      reader.readAsDataURL(file);
+          newRow.innerHTML = `
+            <td>${ownerName}</td>
+            <td>${carMake} ${carModel}</td>
+            <td>${story}</td>
+            <td><img src="${event.target.result}" alt="${carMake} ${carModel}" width="100" height="70" style="object-fit:cover; border-radius:6px;"></td>
+          `;
+
+          tableBody.appendChild(newRow);
+          form.reset();
+          showSuccessMessage();
+        };
+
+        reader.readAsDataURL(file);
+      });
+
+      // Small confirmation after submission
+      function showSuccessMessage() {
+        const msg = document.createElement("p");
+        msg.textContent = "✅ Story added successfully!";
+        msg.className = "success-message";
+        form.appendChild(msg);
+
+        setTimeout(() => msg.remove(), 3000);
+      }
     });
   </script>
+  
 
+ <footer>
+    <p>&copy; 2025 REVLINE | Every Car Has a Story</p>
+    <div class="socials">
+      <a href="#"><img src="images/instagram.png" alt="Instagram" width="20"></a>
+      <a href="#"><img src="images/twitter.png" alt="Twitter" width="20"></a>
+      <a href="#"><img src="images/youtube.png" alt="YouTube" width="20"></a>
+    </div>
+  </footer>
 </body>
 </html>
