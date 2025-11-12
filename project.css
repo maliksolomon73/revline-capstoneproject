@@ -15,14 +15,22 @@ nav a {
 nav a:hover {
   background: #000000;
   color: #2c73b9;
+  transition: color 2s;
 }
 
 body {
   background-color: #949494;
   color: #003366;
   font-family: 'Monserrat', Arial, sans-serif;
-  padding-top: 120px; /* space for header */
+  padding-top: 120px;
   padding-left: 0;
+  opacity: 0;
+  animation: fadeInPage 0.6s ease-in forwards;
+}
+
+@keyframes fadeInPage {
+  from { opacity: 0;}
+  to { opacity: 1;}
 }
 
 h1 {
@@ -39,7 +47,6 @@ h2#introduction {
   margin-top: 0;
 }
 
-#mycar { float: right; margin: 0 0 10px 10px; border: 2px solid #333; border-radius: 6px; }
 
 section {
   margin-bottom: 80px;
@@ -57,7 +64,7 @@ header {
   color: #f0f0f0;
   font-family: 'Monserrat', Times New Roman, serif;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,7 +102,9 @@ tr:first-of-type {
   color: #949494;
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid #333;
   padding: 8px 12px;
 }
@@ -122,6 +131,30 @@ main button:hover {
   color: #2c73b9;
   font-family: 'Monserrat', Times New Roman, serif;
 }
+
+.hero {
+  background: url('images/banner.jpeg') center/cover no-repeat;
+  color: #2c73b9;
+  text-align: center;
+  padding: 150px 20px;
+  animation: fadeIn 2s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+button:hover {
+  transform: scale(1.1);
+}
+
 
 @media (max-width: 1024px) {
   body {
@@ -164,6 +197,123 @@ main button:hover {
   }
 }
 
+.gallery {
+  text-align: center;
+  padding: 40px 0;
+  background-color: #949494;
+}
+
+.carousel-container {
+  height: 100%;
+  width: 100%;
+  color: #949494;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel img {
+  width: 250px;
+  height: auto;
+  margin: 0 10px;
+  border-radius: 8px;
+  transition: transform 0.3s;
+  display: flex;
+  animation: slide 18s linear infinite;
+}
+
+@keyframes slide {
+  0%,
+    20% {
+      transform: translateX(0);
+    }
+  
+    25%,
+    45% {
+      transform: translateX(-100%);
+    }
+  
+    50%,
+    70% {
+      transform: translateX(-200%);
+    }
+  
+    75%,
+    95% {
+      transform: translateX(-300%);
+    }
+  
+    100% {
+      transform: translateX(0);
+    }
+}
+
+.carousel img:hover {
+  transform: scale(1.1);
+}
+
+.member-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+  gap: 25px;
+  justify-items: center;
+  padding: 20px;
+}
+
+.card {
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width : 350px;
+  
+}
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.card img {
+  text-align: center;
+  width: 100%;
+  border-radius: 8px;
+  height: 350px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.community-button {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #2c73b9;
+  color: #949494;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+  background-color: #1a4e7b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
 /* For mobile screens */
 @media (max-width: 600px) {
   header {
@@ -198,6 +348,10 @@ main button:hover {
     width: 80%;
     max-width: 300px;
   }
+
+  .member-grid {
+    grid-template-columns: 1fr; /* one card per row on mobile */
+  }
 }
 
 #carForm {
@@ -220,7 +374,8 @@ main button:hover {
   font-family: 'Monserrat', Arial, sans-serif;
 }
 
-#carForm input, #carForm textarea {
+#carForm input,
+#carForm textarea {
   width: 100%;
   padding: 10px;
   border: 2px solid #2c73b9;
@@ -257,17 +412,6 @@ main button:hover {
   color: #2c73b9;
 }
 
-/* === Gallery Section === */
-#carGallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  max-width: fit-content;
-  max-height: fit-content;
-  margin: 60px auto;
-  padding: 0 20px 60px;
-  justify-content: center;
-}
 
 
 footer {
