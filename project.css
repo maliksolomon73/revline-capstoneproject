@@ -157,39 +157,33 @@ button:hover {
 
 .hero {
   position: relative;
-  width: 100%;
-  height: 400px; /* Adjust as needed */
-  overflow: hidden;
+  height: 350px; /* control size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-image: url("images/hero-bg.jpg"); /* your file path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border-radius: 12px;
-}
-
-.hero img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(60%);
-  display: block;
+  filter: brightness(90%);
 }
 
 .hero-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   color: white;
-  text-align: center;
-  z-index: 2; /* ensures it’s above the image */
+  padding: 20px;
+  backdrop-filter: brightness(110%);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
 }
 
 .hero-text h2 {
-  font-size: 2.2rem;
-  margin-bottom: 10px;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+  font-size: 2rem;
+  margin-bottom: 8px;
 }
 
 .hero-text p {
-  font-size: 1.1rem;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  font-size: 1rem;
 }
 
 
@@ -473,5 +467,6 @@ footer nav {
   background-color: #949494;
   min-width: 700px;
 }
+
 
 
