@@ -162,7 +162,7 @@ button:hover {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-image: url("images/hero-bg.jpg"); /* your file path */
+  background-image: url("images/herobanner.jpg"); /* your file path */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -263,29 +263,11 @@ button:hover {
 }
 
 @keyframes slide {
-  0%,
-    20% {
-      transform: translateX(0);
-    }
-  
-    25%,
-    45% {
-      transform: translateX(-100%);
-    }
-  
-    50%,
-    70% {
-      transform: translateX(-200%);
-    }
-  
-    75%,
-    95% {
-      transform: translateX(-300%);
-    }
-  
-    100% {
-      transform: translateX(0);
-    }
+  0%, 20% { transform: translateX(0); }
+  25%, 45% { transform: translateX(-100%); }
+  50%, 70% { transform: translateX(-200%); }
+  75%, 95% { transform: translateX(-300%); }
+  100% { transform: translateX(0); }
 }
 
 .carousel img:hover {
@@ -467,6 +449,7 @@ footer nav {
   background-color: #949494;
   min-width: 700px;
 }
+
 
 
 
