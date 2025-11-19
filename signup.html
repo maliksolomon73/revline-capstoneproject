@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - RevLine</title>
+  <link rel="stylesheet" href="project.css">
+</head>
+
+<body>
+  <header>
+    <h1>RevLine Account Signup</h1>
+  </header>
+
+  <main>
+    <section id="signup-section">
+      <h2>Create Your Account</h2>
+      <p>Sign up to join the RevLine community and submit your builds, read stories, and save your favorites.</p>
+
+      <form id="signupForm" novalidate>
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" name="fullname" placeholder="Your name" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" minlength="6" placeholder="At least 6 characters" required>
+
+        <label for="confirm">Confirm Password</label>
+        <input type="password" id="confirm" name="confirm" minlength="6" placeholder="Re-enter password" required>
+
+        <div class="terms">
+          <input type="checkbox" id="agree" required>
+          <label for="agree">I agree to the Terms and Privacy Policy</label>
+        </div>
+
+         <a href="index.html" class="btn">Create Account</a>
+
+        <p id="signupMessage" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = fullname.value.trim();
+      const email = document.getElementById('email').value.trim();
+      const pass = password.value;
+      const confirmPass = confirm.value;
+      const agree = document.getElementById('agree').checked;
+      const msg = document.getElementById('signupMessage');
+
+      if (!name || !email || !pass || !confirmPass) {
+        msg.textContent = "Please fill out all fields.";
+        msg.style.color = "red";
+        return;
+      }
+      if (!agree) {
+        msg.textContent = "You must accept the terms.";
+        msg.style.color = "red";
+        return;
+      }
+      if (pass.length < 6) {
+        msg.textContent = "Password must be at least 6 characters.";
+        msg.style.color = "red";
+        return;
+      }
+      if (pass !== confirmPass) {
+        msg.textContent = "Passwords do not match.";
+        msg.style.color = "red";
+        return;
+      }
+
+      msg.style.color = "green";
+      msg.textContent = "Account successfully created!";
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>RevLine | Products</title>
+  <link rel="stylesheet" href="project.css">
+  <link rel="icon" href="images/RevlineLogo.png">
+</head>
+
+<body>
+  <header>
+    <img src="images/RevlineLogo.png" alt="RevLine Logo">
+    <h1>Every Car Has a Story</h1>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="stories.html">Stories</a>
+      <a href="community.html">Community</a>
+      <a href="support.html">Support/About</a>
+      <a href="products.html">Products</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>RevLine Products</h1>
+    <p>Upgrade your style and support the RevLine community.</p>
+
+    <section class="product-grid">
+      <div id='product-component-1763527560632'></div>
+
+      <div id='product-component-1763527890030'></div>
+
+      <div id='product-component-1763527909871'></div>
+
+      <div id='product-component-1763527949699'></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 REVLINE | Every Car Has a Story</p>
+    <div class="socials">
+      <a href="#"><img src="images/instagram.png" alt="Instagram" width="20"></a>
+      <a href="#"><img src="images/twitter.png" alt="Twitter" width="20"></a>
+      <a href="#"><img src="images/youtube.png" alt="YouTube" width="20"></a>
+    </div>
+  </footer>
+
+  <script type="text/javascript">
+  (function () {
+    var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+    function loadScript() {
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = scriptURL;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+      script.onload = ShopifyBuyInit;
+    }
+    function ShopifyBuyInit() {
+      var client = ShopifyBuy.buildClient({
+        domain: '4nuph2-ys.myshopify.com',
+        storefrontAccessToken: 'f5ec862dde9a7a9d0a3e6009f6443857',
+      });
+      ShopifyBuy.UI.onReady(client).then(function (ui) {
+        const products = [
+          {id: '9206063137026', node: 'product-component-1763527560632'},
+          {id: '9206064546050', node: 'product-component-1763527890030'},
+          {id: '9206064644354', node: 'product-component-1763527909871'},
+          {id: '9206064546050', node: 'product-component-1763527949699'}
+        ];
+        products.forEach(p => {
+          ui.createComponent('product', {
+            id: p.id,
+            node: document.getElementById(p.node),
+            moneyFormat: '%24%7B%7Bamount%7D%7D',
+            options: {
+              "product": {
+                "styles": {
+                  "product": {
+                    "@media (min-width: 601px)": {
+                      "max-width": "calc(25% - 20px)",
+                      "margin-left": "20px",
+                      "margin-bottom": "50px"
+                    }
+                  },
+                  "button": {
+                    ":hover": {"background-color": "#000a0e"},
+                    "background-color": "#000608",
+                    ":focus": {"background-color": "#000a0e"}
+                  }
+                },
+                "text": {"button": "Add to cart"}
+              },
+              "cart": {
+                "styles": {
+                  "button": {
+                    ":hover": {"background-color": "#000a0e"},
+                    "background-color": "#000608",
+                    ":focus": {"background-color": "#000a0e"}
+                  }
+                },
+                "text": {"total": "Subtotal", "button": "Checkout"}
+              }
+            }
+          });
+        });
+      });
+    }
+    if (window.ShopifyBuy) {
+      if (window.ShopifyBuy.UI) {
+        ShopifyBuyInit();
+      } else { loadScript(); }
+    } else { loadScript(); }
+  })();
+  </script>
+
+</body>
+</html>
