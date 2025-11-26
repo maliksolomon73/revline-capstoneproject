@@ -55,114 +55,144 @@
   </table>
 
   <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("carForm");
-  const tableBody = document.querySelector("#storyTable tbody");
-  const fileInput = document.getElementById("carImage");
+    document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("carForm");
+    const tableBody = document.querySelector("#storyTable tbody");
+    const fileInput = document.getElementById("carImage");
 
-  // Load saved stories
-  let stories = JSON.parse(localStorage.getItem("stories")) || [];
-  renderStories();
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const ownerName = document.getElementById("ownerName").value.trim();
-    const carMake = document.getElementById("carMake").value.trim();
-    const carModel = document.getElementById("carModel").value.trim();
-    const story = document.getElementById("story").value.trim();
-    const file = fileInput.files[0];
-
-    if (!ownerName || !carMake || !carModel || !story) {
-      alert("Please fill all fields.");
-      return;
-    }
-
-    if (!file) {
-      const newStory = {
-        id: Date.now(),
-        ownerName,
-        carMake,
-        carModel,
-        story,
-        image: null
-      };
-
-      stories.push(newStory);
-      localStorage.setItem("stories", JSON.stringify(stories));
-      renderStories();
-      form.reset();
-      return;
-    }
-
-    if (!file.type.startsWith("image/")) {
-      alert("Invalid image format");
-      return;
-    }
-
-    if (file.size > 3 * 1024 * 1024) {
-      alert("Image too large (3MB max)");
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const newStory = {
-        id: Date.now(),
-        ownerName,
-        carMake,
-        carModel,
-        story,
-        image: event.target.result
-      };
-
-      stories.push(newStory);
-      localStorage.setItem("stories", JSON.stringify(stories));
-      renderStories();
-      form.reset();
-    };
-
-    reader.readAsDataURL(file);
-  });
-
-  function renderStories() {
-    tableBody.innerHTML = "";
-
-    stories.forEach((item) => {
-      const row = document.createElement("tr");
-
-      row.innerHTML = `
-        <td>${item.ownerName}</td>
-        <td>${item.carMake} ${item.carModel}</td>
-        <td>${item.story}</td>
-        <td>
-          ${ item.image 
-              ? `<img src="${item.image}" width="100" height="70" style="object-fit:cover;border-radius:6px;">`
-              : "<em>No image</em>" }
-        </td>
-        <td>
-          <button class="delete-btn" data-id="${item.id}" style="background:#d33;color:#fff;padding:5px;border:none;border-radius:4px;">Delete</button>
-        </td>
-      `;
-
-      tableBody.appendChild(row);
+    const modal = document.createElement("div");
+    modal.id = "imgModal";
+    modal.style.cssText = `
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.8);
+      justify-content:center;
+      align-items:center;
+      z-index:9999;
+    `;
+    modal.innerHTML = `
+      <img id="modalImg" style="max-width:90%;max-height:90%;border-radius:10px;">
+    `;
+    document.body.appendChild(modal);
+  
+    modal.addEventListener("click", () => {
+      modal.style.display = "none";
     });
-
-    document.querySelectorAll(".delete-btn").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        const id = Number(e.target.getAttribute("data-id"));
-        deleteStory(id);
-      });
-    });
-  }
-
-  function deleteStory(id) {
-    stories = stories.filter(s => s.id !== id);
-    localStorage.setItem("stories", JSON.stringify(stories));
+  
+    let stories = JSON.parse(localStorage.getItem("stories")) || [];
     renderStories();
-  }
-});
-</script>
+  
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+  
+      const ownerName = document.getElementById("ownerName").value.trim();
+      const carMake = document.getElementById("carMake").value.trim();
+      const carModel = document.getElementById("carModel").value.trim();
+      const story = document.getElementById("story").value.trim();
+      const file = fileInput.files[0];
+  
+      if (!ownerName || !carMake || !carModel || !story) {
+        alert("Please fill all fields.");
+        return;
+      }
+  
+      if (!file) {
+        const newStory = {
+          id: Date.now(),
+          ownerName,
+          carMake,
+          carModel,
+          story,
+          image: null
+        };
+  
+        stories.push(newStory);
+        localStorage.setItem("stories", JSON.stringify(stories));
+        renderStories();
+        form.reset();
+        return;
+      }
+  
+      if (!file.type.startsWith("image/")) {
+        alert("Invalid image format");
+        return;
+      }
+  
+      if (file.size > 3 * 1024 * 1024) {
+        alert("Image too large (3MB max)");
+        return;
+      }
+  
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const newStory = {
+          id: Date.now(),
+          ownerName,
+          carMake,
+          carModel,
+          story,
+          image: event.target.result
+        };
+  
+        stories.push(newStory);
+        localStorage.setItem("stories", JSON.stringify(stories));
+        renderStories();
+        form.reset();
+      };
+  
+      reader.readAsDataURL(file);
+    });
+  
+    function renderStories() {
+      tableBody.innerHTML = "";
+  
+      stories.forEach((item) => {
+        const row = document.createElement("tr");
+  
+        row.innerHTML = `
+          <td>${item.ownerName}</td>
+          <td>${item.carMake} ${item.carModel}</td>
+          <td>${item.story}</td>
+          <td>
+            ${ item.image 
+                ? `<img class="story-img" src="${item.image}" width="100" height="70" 
+                     style="object-fit:cover;border-radius:6px;cursor:pointer;">`
+                : "<em>No image</em>" }
+          </td>
+          <td>
+            <button class="delete-btn" data-id="${item.id}" 
+              style="background:#d33;color:#fff;padding:6px 10px;border:none;border-radius:4px;cursor:pointer;">
+              Delete
+            </button>
+          </td>
+        `;
+  
+        tableBody.appendChild(row);
+      });
+  
+      document.querySelectorAll(".story-img").forEach(img => {
+        img.addEventListener("click", () => {
+          document.getElementById("modalImg").src = img.src;
+          modal.style.display = "flex";
+        });
+      });
+  
+      document.querySelectorAll(".delete-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const id = Number(e.target.getAttribute("data-id"));
+          deleteStory(id);
+        });
+      });
+    }
+  
+    function deleteStory(id) {
+      stories = stories.filter(s => s.id !== id);
+      localStorage.setItem("stories", JSON.stringify(stories));
+      renderStories();
+    }
+  });
+  </script>
   
 
  <footer>
@@ -175,5 +205,6 @@ document.addEventListener("DOMContentLoaded", () => {
   </footer>
 </body>
 </html>
+
 
 
