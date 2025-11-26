@@ -133,11 +133,23 @@ main button:hover {
 }
 
 .hero {
-  background: url('images/banner.jpeg') center/cover no-repeat;
-  color: #2c73b9;
+  position: relative;
+  width: 100%;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 150px 20px;
+
+  background-image: url("images/herobanner.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-radius: 12px;
+  filter: brightness(90%);
   animation: fadeIn 2s ease-in;
+  padding: 20px;
 }
 
 @keyframes fadeIn {
@@ -153,21 +165,6 @@ main button:hover {
 
 button:hover {
   transform: scale(1.1);
-}
-
-.hero {
-  position: relative;
-  height: 350px; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background-image: url("images/herobanner.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 12px;
-  filter: brightness(90%);
 }
 
 .hero-text {
@@ -449,6 +446,7 @@ footer nav {
   background-color: #949494;
   min-width: 700px;
 }
+
 
 
 
